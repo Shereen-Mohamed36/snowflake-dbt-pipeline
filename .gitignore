@@ -1,0 +1,13 @@
+# dbt generated folders
+target/
+dbt_packages/
+logs/
+
+# Sensitive credentials
+profiles.yml
+*.env
+.env
+
+# OS / Editor files
+.DS_Store
+.vscode/
