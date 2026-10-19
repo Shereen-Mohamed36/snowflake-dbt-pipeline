@@ -1,15 +1,14 @@
-Welcome to your new dbt project!
+# E-Commerce ELT Analytics Pipeline (Snowflake + dbt)
 
-### Using the starter project
+![dbt](https://img.shields.io/badge/dbt-1.13.0-orange?logo=dbt)
+![Snowflake](https://img.shields.io/badge/Snowflake-Data%20Warehouse-29B5E8?logo=snowflake)
+![SQL](https://img.shields.io/badge/Language-SQL-blue)
+![Data Quality](https://img.shields.io/badge/Tests-14%2F14%20Passed-brightgreen)
 
-Try running the following commands:
-- dbt run
-- dbt test
+An ELT data pipeline built with **Snowflake** as the data warehouse and **dbt (Data Build Tool)** for transformation, data quality testing, deduplication, and analytics documentation.
 
+---
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+## 🏗️ Architecture & Data Flow
+
+This project follows the **Medallion Architecture** (Raw $\rightarrow$ Staging $\rightarrow$ Marts) to clean raw e-commerce data and organize it into business-ready analytical data marts.
