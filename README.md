@@ -9,6 +9,8 @@ An ELT data pipeline built with **Snowflake** as the data warehouse and **dbt (D
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## Architecture & Data Flow
 
 This project follows the **Medallion Architecture** (Raw $\rightarrow$ Staging $\rightarrow$ Marts) to clean raw e-commerce data and organize it into business-ready analytical data marts.
+
+<img width="1600" height="688" alt="image" src="https://github.com/user-attachments/assets/932c96c4-cbb4-4c34-8ea6-3b638e17bfe4" />
