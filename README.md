@@ -63,9 +63,45 @@ ecommerce_dbt/
   - `accepted_values` constraint on `order_status` (`completed`, `pending`, `cancelled`).
   - Custom SQL test (`assert_completed_revenue_is_non_negative.sql`) to verify no completed order has negative revenue.
 
+## Prerequisites & Database Setup
+
+Before running the dbt project, ensure you have:
+
+1. **A Snowflake Account:** Set up a database named `ECOMMERCE_DB`.
+2. **Raw Schemas & Data Loaded:** Create the `RAW` schema and load the source CSV files (`customers.csv`, `products.csv`, `orders.csv`) into their respective tables (`CUSTOMERS`, `PRODUCTS`, `ORDERS`).
+3. **dbt Schemas:** Ensure `STAGING` and `MARTS` schemas exist (or let dbt create them via profile permissions).
+
 ## Running the Project
 
 1. **Install dependencies:**
    ```bash
-   pip install dbt-snowflake ```
-   
+   pip install dbt-snowflake
+   ```
+
+   2. **Set up connection profile:**
+   Configure connection details in `~/.dbt/profiles.yml`:
+   ```yaml
+   ecommerce_dbt:
+     target: dev
+     outputs:
+       dev:
+         type: snowflake
+         account: <YOUR_SNOWFLAKE_ACCOUNT>
+         user: <YOUR_USER>
+         password: <YOUR_PASSWORD>
+         role: ACCOUNTADMIN
+         warehouse: COMPUTE_WH
+         database: ECOMMERCE_DB
+         schema: STAGING
+         threads: 4
+
+**Execute pipeline and tests:**
+```bash
+dbt run
+dbt test
+```
+**Generate documentation & lineage:**
+```bash
+dbt docs generate
+dbt docs serve
+```
