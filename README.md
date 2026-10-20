@@ -50,5 +50,22 @@ ecommerce_dbt/
 │   └── assert_completed_revenue_is_non_negative.sql
 ├── dbt_project.yml
 └── README.md
+```
 
-<img width="1600" height="688" alt="image" src="https://github.com/user-attachments/assets/932c96c4-cbb4-4c34-8ea6-3b638e17bfe4" />
+## Business Rules & Data Quality
+
+- **Revenue Calculation:** Computed as `quantity * price`.
+- **Status Handling:** Pending and cancelled orders remain in `fct_orders` for order tracking, but are excluded from spending and sales totals in `mart_customer_summary` and `mart_category_sales`.
+- **Deduplication:** Orders are deduplicated on `order_id` by selecting the most recent entry based on `order_date`.
+- **Testing (14 Tests Passed):**
+  - Primary key `unique` and `not_null` tests on IDs across models.
+  - Foreign key `relationships` checks on `customer_id` and `product_id`.
+  - `accepted_values` constraint on `order_status` (`completed`, `pending`, `cancelled`).
+  - Custom SQL test (`assert_completed_revenue_is_non_negative.sql`) to verify no completed order has negative revenue.
+
+## Running the Project
+
+1. **Install dependencies:**
+   ```bash
+   pip install dbt-snowflake ```
+   
