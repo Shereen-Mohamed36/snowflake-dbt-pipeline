@@ -1,4 +1,4 @@
-# E-Commerce ELT Analytics Pipeline (Snowflake + dbt)
+# E-Commerce ELT Analytics Pipeline 
 
 ![dbt](https://img.shields.io/badge/dbt-1.13.0-orange?logo=dbt)
 ![Snowflake](https://img.shields.io/badge/Snowflake-Data%20Warehouse-29B5E8?logo=snowflake)
