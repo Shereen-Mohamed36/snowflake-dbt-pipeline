@@ -9,8 +9,46 @@ An ELT data pipeline built with **Snowflake** as the data warehouse and **dbt (D
 
 ---
 
-## Architecture & Data Flow
+## Overview
 
+The pipeline processes raw e-commerce CSV datasets (`customers`, `products`, `orders`) loaded into Snowflake's `RAW` schema, then uses dbt to:
+- Standardize column names, data types, and order status values.
+- Deduplicate orders and filter out invalid foreign key references.
+- Join datasets to calculate order-level revenue and aggregate customer and category metrics.
+- Enforce data quality using automated dbt tests.
+
+## Data Pipeline Structure
 This project follows the **Medallion Architecture** (Raw $\rightarrow$ Staging $\rightarrow$ Marts) to clean raw e-commerce data and organize it into business-ready analytical data marts.
+
+The architecture is divided into three logical layers:
+
+1. **`RAW` Schema (Snowflake):** Raw ingestion layer containing `customers`, `products`, and `orders` tables.
+2. **`STAGING` Schema (dbt):** Cleansed and standardized views (`stg_customers`, `stg_products`, `stg_orders`). Deduplicates order rows using window functions and filters out orphaned records.
+3. **`MARTS` Schema (dbt):**
+   - `fct_orders`: Fact table at the order grain with joined customer/product details and calculated revenue.
+   - `mart_customer_summary`: Aggregates completed order counts and total spending per customer.
+   - `mart_category_sales`: Aggregates completed order counts and total revenue per product category.
+     
+<img width="1600" height="688" alt="image" src="https://github.com/user-attachments/assets/fea6ee89-aa82-40da-bcf5-e11d544762a1" />
+
+## Project Structure
+
+```text
+ecommerce_dbt/
+├── models/
+│   ├── staging/
+│   │   ├── schema.yml
+│   │   ├── stg_customers.sql
+│   │   ├── stg_products.sql
+│   │   └── stg_orders.sql
+│   └── marts/
+│       ├── schema.yml
+│       ├── fct_orders.sql
+│       ├── mart_customer_summary.sql
+│       └── mart_category_sales.sql
+├── tests/
+│   └── assert_completed_revenue_is_non_negative.sql
+├── dbt_project.yml
+└── README.md
 
 <img width="1600" height="688" alt="image" src="https://github.com/user-attachments/assets/932c96c4-cbb4-4c34-8ea6-3b638e17bfe4" />
